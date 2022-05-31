@@ -1,0 +1,46 @@
+C:\Users\jonat\Downloads\Kasir\Kasir\Kasir\bin\Debug\Kasir.exe.config
+C:\Users\jonat\Downloads\Kasir\Kasir\Kasir\bin\Debug\Kasir.exe
+C:\Users\jonat\Downloads\Kasir\Kasir\Kasir\bin\Debug\Kasir.pdb
+C:\Users\jonat\Downloads\Kasir\Kasir\Kasir\obj\Debug\Kasir.csproj.AssemblyReference.cache
+C:\Users\jonat\Downloads\Kasir\Kasir\Kasir\obj\Debug\Kasir.FormInputBarang.resources
+C:\Users\jonat\Downloads\Kasir\Kasir\Kasir\obj\Debug\Kasir.FormKasir.resources
+C:\Users\jonat\Downloads\Kasir\Kasir\Kasir\obj\Debug\Kasir.Properties.Resources.resources
+C:\Users\jonat\Downloads\Kasir\Kasir\Kasir\obj\Debug\Kasir.csproj.GenerateResource.cache
+C:\Users\jonat\Downloads\Kasir\Kasir\Kasir\obj\Debug\Kasir.csproj.CoreCompileInputs.cache
+C:\Users\jonat\Downloads\Kasir\Kasir\Kasir\obj\Debug\Kasir.exe
+C:\Users\jonat\Downloads\Kasir\Kasir\Kasir\obj\Debug\Kasir.pdb
+C:\Users\jonat\Downloads\Kasir\Kasir\Kasir\obj\Debug\Kasir.FormInputDiscount.resources
+C:\Users\jonat\Downloads\Kasir\Kasir\Kasir\obj\Debug\Kasir.FormListDiscount.resources
+C:\Users\jonat\Downloads\Kasir\Kasir\Kasir\obj\Debug\Kasir.FormTambah.resources
+C:\Users\jonat\Downloads\Kasir\Kasir\Kasir\obj\Debug\Kasir.FormInputUser.resources
+C:\Users\jonat\Downloads\Kasir\Kasir\Kasir\obj\Debug\Kasir.FormTransaksi.resources
+D:\Johans\Kuliah\Semester 4\PCS\Kasir\Kasir\Kasir\bin\Debug\Kasir.exe.config
+D:\Johans\Kuliah\Semester 4\PCS\Kasir\Kasir\Kasir\bin\Debug\Kasir.exe
+D:\Johans\Kuliah\Semester 4\PCS\Kasir\Kasir\Kasir\bin\Debug\Kasir.pdb
+D:\Johans\Kuliah\Semester 4\PCS\Kasir\Kasir\Kasir\bin\Debug\MySql.Data.dll
+D:\Johans\Kuliah\Semester 4\PCS\Kasir\Kasir\Kasir\bin\Debug\Google.Protobuf.dll
+D:\Johans\Kuliah\Semester 4\PCS\Kasir\Kasir\Kasir\bin\Debug\ZstdNet.dll
+D:\Johans\Kuliah\Semester 4\PCS\Kasir\Kasir\Kasir\bin\Debug\K4os.Compression.LZ4.Streams.dll
+D:\Johans\Kuliah\Semester 4\PCS\Kasir\Kasir\Kasir\bin\Debug\BouncyCastle.Crypto.dll
+D:\Johans\Kuliah\Semester 4\PCS\Kasir\Kasir\Kasir\bin\Debug\Ubiety.Dns.Core.dll
+D:\Johans\Kuliah\Semester 4\PCS\Kasir\Kasir\Kasir\bin\Debug\System.Memory.dll
+D:\Johans\Kuliah\Semester 4\PCS\Kasir\Kasir\Kasir\bin\Debug\System.Buffers.dll
+D:\Johans\Kuliah\Semester 4\PCS\Kasir\Kasir\Kasir\bin\Debug\K4os.Compression.LZ4.dll
+D:\Johans\Kuliah\Semester 4\PCS\Kasir\Kasir\Kasir\bin\Debug\K4os.Hash.xxHash.dll
+D:\Johans\Kuliah\Semester 4\PCS\Kasir\Kasir\Kasir\bin\Debug\System.Numerics.Vectors.dll
+D:\Johans\Kuliah\Semester 4\PCS\Kasir\Kasir\Kasir\bin\Debug\MySql.Data.xml
+D:\Johans\Kuliah\Semester 4\PCS\Kasir\Kasir\Kasir\obj\Debug\Kasir.csproj.AssemblyReference.cache
+D:\Johans\Kuliah\Semester 4\PCS\Kasir\Kasir\Kasir\obj\Debug\Kasir.exe.config
+D:\Johans\Kuliah\Semester 4\PCS\Kasir\Kasir\Kasir\obj\Debug\Kasir.FormInputDiscount.resources
+D:\Johans\Kuliah\Semester 4\PCS\Kasir\Kasir\Kasir\obj\Debug\Kasir.FormInputBarang.resources
+D:\Johans\Kuliah\Semester 4\PCS\Kasir\Kasir\Kasir\obj\Debug\Kasir.FormInputUser.resources
+D:\Johans\Kuliah\Semester 4\PCS\Kasir\Kasir\Kasir\obj\Debug\Kasir.FormKasir.resources
+D:\Johans\Kuliah\Semester 4\PCS\Kasir\Kasir\Kasir\obj\Debug\Kasir.FormListDiscount.resources
+D:\Johans\Kuliah\Semester 4\PCS\Kasir\Kasir\Kasir\obj\Debug\Kasir.FormTambah.resources
+D:\Johans\Kuliah\Semester 4\PCS\Kasir\Kasir\Kasir\obj\Debug\Kasir.FormTransaksi.resources
+D:\Johans\Kuliah\Semester 4\PCS\Kasir\Kasir\Kasir\obj\Debug\Kasir.Properties.Resources.resources
+D:\Johans\Kuliah\Semester 4\PCS\Kasir\Kasir\Kasir\obj\Debug\Kasir.csproj.GenerateResource.cache
+D:\Johans\Kuliah\Semester 4\PCS\Kasir\Kasir\Kasir\obj\Debug\Kasir.csproj.CoreCompileInputs.cache
+D:\Johans\Kuliah\Semester 4\PCS\Kasir\Kasir\Kasir\obj\Debug\Kasir.csproj.CopyComplete
+D:\Johans\Kuliah\Semester 4\PCS\Kasir\Kasir\Kasir\obj\Debug\Kasir.exe
+D:\Johans\Kuliah\Semester 4\PCS\Kasir\Kasir\Kasir\obj\Debug\Kasir.pdb
