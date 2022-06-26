@@ -31,6 +31,9 @@ namespace Kasir
         {
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -48,6 +51,8 @@ namespace Kasir
             this.button6 = new System.Windows.Forms.Button();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.labelDiskon = new System.Windows.Forms.Label();
             this.labelUkuran = new System.Windows.Forms.Label();
             this.labelHarga = new System.Windows.Forms.Label();
             this.labelTipe = new System.Windows.Forms.Label();
@@ -78,11 +83,6 @@ namespace Kasir
             this.button10 = new System.Windows.Forms.Button();
             this.button9 = new System.Windows.Forms.Button();
             this.button11 = new System.Windows.Forms.Button();
-            this.labelDiskon = new System.Windows.Forms.Label();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
@@ -100,12 +100,12 @@ namespace Kasir
             this.dataGridView1.AllowUserToDeleteRows = false;
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(6, 19);
+            this.dataGridView1.Location = new System.Drawing.Point(6, 64);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(469, 394);
+            this.dataGridView1.Size = new System.Drawing.Size(469, 349);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentDoubleClick);
             // 
@@ -118,7 +118,6 @@ namespace Kasir
             this.dataGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1,
             this.Column2,
-            this.Column3,
             this.Column4});
             this.dataGridView2.Location = new System.Drawing.Point(14, 96);
             this.dataGridView2.Name = "dataGridView2";
@@ -128,6 +127,27 @@ namespace Kasir
             this.dataGridView2.Size = new System.Drawing.Size(379, 311);
             this.dataGridView2.TabIndex = 1;
             this.dataGridView2.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView2_CellClick);
+            // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "No";
+            this.Column1.MinimumWidth = 6;
+            this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
+            // 
+            // Column2
+            // 
+            this.Column2.HeaderText = "Nama";
+            this.Column2.MinimumWidth = 6;
+            this.Column2.Name = "Column2";
+            this.Column2.ReadOnly = true;
+            // 
+            // Column4
+            // 
+            this.Column4.HeaderText = "Harga Total";
+            this.Column4.MinimumWidth = 6;
+            this.Column4.Name = "Column4";
+            this.Column4.ReadOnly = true;
             // 
             // label1
             // 
@@ -158,9 +178,10 @@ namespace Kasir
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(111, 32);
+            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox1.Location = new System.Drawing.Point(111, 23);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(265, 22);
+            this.textBox1.Size = new System.Drawing.Size(265, 30);
             this.textBox1.TabIndex = 5;
             // 
             // button1
@@ -189,8 +210,9 @@ namespace Kasir
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(379, 98);
             this.button4.TabIndex = 11;
-            this.button4.Text = "Cetak Struk";
+            this.button4.Text = "ORDER";
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // label6
             // 
@@ -275,6 +297,7 @@ namespace Kasir
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.textBox2);
             this.groupBox1.Controls.Add(this.labelDiskon);
             this.groupBox1.Controls.Add(this.labelUkuran);
             this.groupBox1.Controls.Add(this.labelHarga);
@@ -297,6 +320,23 @@ namespace Kasir
             this.groupBox1.TabIndex = 63;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "List Item";
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(19, 23);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(455, 22);
+            this.textBox2.TabIndex = 75;
+            this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
+            // 
+            // labelDiskon
+            // 
+            this.labelDiskon.AutoSize = true;
+            this.labelDiskon.Location = new System.Drawing.Point(92, 530);
+            this.labelDiskon.Name = "labelDiskon";
+            this.labelDiskon.Size = new System.Drawing.Size(13, 17);
+            this.labelDiskon.TabIndex = 74;
+            this.labelDiskon.Text = "-";
             // 
             // labelUkuran
             // 
@@ -617,43 +657,6 @@ namespace Kasir
             this.button11.UseVisualStyleBackColor = true;
             this.button11.Click += new System.EventHandler(this.button11_Click);
             // 
-            // labelDiskon
-            // 
-            this.labelDiskon.AutoSize = true;
-            this.labelDiskon.Location = new System.Drawing.Point(92, 530);
-            this.labelDiskon.Name = "labelDiskon";
-            this.labelDiskon.Size = new System.Drawing.Size(13, 17);
-            this.labelDiskon.TabIndex = 74;
-            this.labelDiskon.Text = "-";
-            // 
-            // Column1
-            // 
-            this.Column1.HeaderText = "No";
-            this.Column1.MinimumWidth = 6;
-            this.Column1.Name = "Column1";
-            this.Column1.ReadOnly = true;
-            // 
-            // Column2
-            // 
-            this.Column2.HeaderText = "Nama";
-            this.Column2.MinimumWidth = 6;
-            this.Column2.Name = "Column2";
-            this.Column2.ReadOnly = true;
-            // 
-            // Column3
-            // 
-            this.Column3.HeaderText = "Jum";
-            this.Column3.MinimumWidth = 6;
-            this.Column3.Name = "Column3";
-            this.Column3.ReadOnly = true;
-            // 
-            // Column4
-            // 
-            this.Column4.HeaderText = "Harga Total";
-            this.Column4.MinimumWidth = 6;
-            this.Column4.Name = "Column4";
-            this.Column4.ReadOnly = true;
-            // 
             // FormKasir
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -740,8 +743,8 @@ namespace Kasir
         private System.Windows.Forms.Label labelDiskon;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
+        private System.Windows.Forms.TextBox textBox2;
     }
 }
 

@@ -46,13 +46,25 @@ namespace Kasir
             loadgrid();
             loadcombo();
             dataGridView2.Columns[0].Width = 25;
-            dataGridView2.Columns[2].Width = 25;
-            dataGridView2.Columns[3].Width = 60;
+            dataGridView2.Columns[2].Width = 85;
+
+            textBox1.Enabled = false;
+        }
+
+        private void generateID()
+        {
+            MySqlCommand cmd = new MySqlCommand("select max(ori.or_id) from orders ori", Program.conn);
+            Program.conn.Open();
+            int orderid = Convert.ToInt32(cmd.ExecuteScalar().ToString()) + 1;
+            Program.conn.Close();
+            textBox1.Text = orderid.ToString();
+
         }
         DataTable dtitem;
         DataTable dtitemdesc;
         private void loadgrid()
         {
+            
             string query = "SELECT it.`it_nama` AS 'Nama',CONCAT('Rp. ', FORMAT(it.it_price, 'c', 'id-ID')) AS 'Harga',it.it_stock as 'Stock' FROM item it,merk me, tipe ti WHERE it.`me_id`= me.`me_id` AND it.`ti_id` = ti.`ti_id` ORDER BY it.it_id";
             MySqlCommand cmd = new MySqlCommand(query, Program.conn);
 
@@ -66,6 +78,31 @@ namespace Kasir
             dataGridView1.DataSource = dtitem.DefaultView;
 
             query = "SELECT me.me_name,ti.ti_name,it.it_size,it.it_id FROM item it,merk me, tipe ti WHERE it.`me_id`= me.`me_id` AND it.`ti_id` = ti.`ti_id` ORDER BY it.it_id";
+            cmd = new MySqlCommand(query, Program.conn);
+
+            Program.conn.Open();
+            cmd.ExecuteReader();
+            Program.conn.Close();
+
+            da = new MySqlDataAdapter(cmd);
+            dtitemdesc = new DataTable();
+            da.Fill(dtitemdesc);
+        }
+        private void loadgrid(string search)
+        {
+            string query = "SELECT it.`it_nama` AS 'Nama',CONCAT('Rp. ', FORMAT(it.it_price, 'c', 'id-ID')) AS 'Harga',it.it_stock as 'Stock' FROM item it,merk me, tipe ti WHERE it.`me_id`= me.`me_id` AND it.`ti_id` = ti.`ti_id` AND it.`it_nama` LIKE '%"+search+"%' ORDER BY it.it_id";
+            MySqlCommand cmd = new MySqlCommand(query, Program.conn);
+
+            Program.conn.Open();
+            cmd.ExecuteReader();
+            Program.conn.Close();
+
+            MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+            dtitem = new DataTable();
+            da.Fill(dtitem);
+            dataGridView1.DataSource = dtitem.DefaultView;
+
+            query = "SELECT me.me_name,ti.ti_name,it.it_size,it.it_id FROM item it,merk me, tipe ti WHERE it.`me_id`= me.`me_id` AND it.`ti_id` = ti.`ti_id` AND it.`it_nama` LIKE '%" + search + "%'  ORDER BY it.it_id";
             cmd = new MySqlCommand(query, Program.conn);
 
             Program.conn.Open();
@@ -189,7 +226,7 @@ namespace Kasir
         private void dataGridView1_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             int idx = e.RowIndex;
-
+            numericUpDown1.Value = 1;
             labelNama.Text = dtitem.Rows[idx][0].ToString();
             labelMerk.Text = dtitemdesc.Rows[idx][0].ToString();
             labelTipe.Text = dtitemdesc.Rows[idx][1].ToString();
@@ -322,21 +359,17 @@ namespace Kasir
                         buy1get1 = true;
                     }
                 }
-                Console.WriteLine(dtdiskon.Rows[0][3].ToString());
 
                 int diskon = Convert.ToInt32(dtdiskon.Rows[0][1].ToString().Substring(7, dtdiskon.Rows[0][1].ToString().Length - 7).Substring(0, dtdiskon.Rows[0][1].ToString().Substring(7, dtdiskon.Rows[0][1].ToString().Length - 7).Length - 1));
-                items.Add(new Item(Convert.ToInt32(dtdiskon.Rows[0][2].ToString()), dtdiskon.Rows[0][0].ToString(), diskon, buy1get1, buy2get3, Convert.ToInt32(dtdiskon.Rows[0][3].ToString()), Convert.ToInt32(numericUpDown1.Value)));
-                dataGridView2.Rows.Add(dataGridView2.Rows.Count + 1, items[items.Count - 1].nama, items[items.Count - 1].jumlah, items[items.Count - 1].harga * items[items.Count - 1].jumlah * (100 - items[items.Count - 1].diskon) / 100);
-                
+                for (int i = 0; i < numericUpDown1.Value; i++)
+                {
+                    items.Add(new Item(Convert.ToInt32(dtdiskon.Rows[0][2].ToString()), dtdiskon.Rows[0][0].ToString(), diskon, buy1get1, buy2get3, Convert.ToInt32(dtdiskon.Rows[0][3].ToString())));
+                    dataGridView2.Rows.Add(dataGridView2.Rows.Count + 1, items[items.Count - 1].nama, items[items.Count - 1].harga * (100 - items[items.Count - 1].diskon) / 100);
+                }
+
                 int harga = 0;
                 int count = 0;
-                for (int i = 0; i < dataGridView2.Rows.Count; i++)
-                {
-                    harga += Convert.ToInt32(dataGridView2.Rows[i].Cells[3].Value.ToString());
-                    count += Convert.ToInt32(dataGridView2.Rows[i].Cells[2].Value.ToString());
-                }
-                label1.Text = "Total Pesanan : " + count;
-                label2.Text = "Total Harga : Rp. " + harga;
+                
                 labelNama.Text = "-";
                 labelMerk.Text = "-";
                 labelTipe.Text = "-";
@@ -344,10 +377,98 @@ namespace Kasir
                 labelHarga.Text ="-";
                 labelDiskon.Text = "-";
                 numericUpDown1.Value = 0;
+                determine_diskon();
+                for (int i = 0; i < dataGridView2.Rows.Count; i++)
+                {
+                    if (dataGridView2.Rows[i].DefaultCellStyle.BackColor == DataGridView.DefaultBackColor)
+                    {
+                        harga += Convert.ToInt32(dataGridView2.Rows[i].Cells[2].Value.ToString());
+                        count = dataGridView2.Rows.Count;
+                    }
+                }
+                label1.Text = "Total Pesanan : " + count;
+                label2.Text = "Total Harga : Rp. " + harga;
             }
             else
             {
                 MessageBox.Show("Jumlah harus lebih dari 0");
+            }
+        }
+
+        private void determine_diskon()
+        {
+            int counterbuy1get1 = 0;
+            int counterbuy2get3 = 0;
+            for (int i = 0; i < dataGridView2.Rows.Count; i++)
+            {
+                dataGridView2.Rows[i].DefaultCellStyle.BackColor = DataGridView.DefaultBackColor;
+            }
+            for (int i = 0; i < items.Count; i++)
+            {
+                if (items[i].buy1get1)
+                {
+                    counterbuy1get1++;
+                }
+                if (items[i].buy2get3)
+                {
+                    counterbuy2get3++;
+                }
+            }
+            if (counterbuy1get1 > 1)
+            {
+                counterbuy1get1 = (counterbuy1get1 - counterbuy1get1 % 2)/2;
+                List<int> temp = new List<int>();
+                for (int i = 0; i < items.Count; i++)
+                {
+                    if (items[i].buy1get1)
+                    {
+                        temp.Add(items[i].harga*(100-items[i].diskon)/100);
+                    }
+                }
+                temp.Sort();
+                for (int i = 0; i < temp.Count; i++)
+                {
+                    Console.WriteLine(temp[i]);
+                }
+                for (int i = 0; i < counterbuy1get1; i++)
+                {
+                    for (int j = 0; j < dataGridView2.Rows.Count; j++)
+                    {
+                        if (Convert.ToInt32(dataGridView2.Rows[j].Cells[2].Value.ToString()) == temp[i] 
+                            && dataGridView2.Rows[j].DefaultCellStyle.BackColor != Color.Green
+                            && dataGridView2.Rows[j].DefaultCellStyle.BackColor != Color.Orange)
+                        {
+                            dataGridView2.Rows[j].DefaultCellStyle.BackColor = Color.Green;
+                            break;
+                        }
+                    }
+                }
+            }
+            if (counterbuy2get3 > 2)
+            {
+                counterbuy2get3 = (counterbuy2get3 - counterbuy2get3 % 3)/3;
+                List<int> temp = new List<int>();
+                for (int i = 0; i < items.Count; i++)
+                {
+                    if (items[i].buy2get3)
+                    {
+                        temp.Add(items[i].harga);
+                    }
+                }
+                temp.Sort();
+                for (int i = 0; i < counterbuy2get3; i++)
+                {
+                    for (int j = 0; j < dataGridView2.Rows.Count; j++)
+                    {
+                        if (Convert.ToInt32(dataGridView2.Rows[j].Cells[2].Value.ToString()) == temp[i]
+                            && dataGridView2.Rows[j].DefaultCellStyle.BackColor != Color.Orange
+                            && dataGridView2.Rows[j].DefaultCellStyle.BackColor != Color.Green)
+                        {
+                            dataGridView2.Rows[j].DefaultCellStyle.BackColor = Color.Orange;
+                            break;
+                        }
+                    }
+                }
             }
         }
 
@@ -360,17 +481,22 @@ namespace Kasir
             else
             {
                 dataGridView2.Rows.RemoveAt(transaksiidx);
+                items.RemoveAt(transaksiidx);
             }
             int harga = 0;
             int count = 0;
             for (int i = 0; i < dataGridView2.Rows.Count; i++)
             {
-                harga += Convert.ToInt32(dataGridView2.Rows[i].Cells[3].Value.ToString());
-                count += Convert.ToInt32(dataGridView2.Rows[i].Cells[2].Value.ToString());
+                if (dataGridView2.Rows[i].DefaultCellStyle.BackColor == DataGridView.DefaultBackColor)
+                {
+                    harga += Convert.ToInt32(dataGridView2.Rows[i].Cells[2].Value.ToString());
+                    count = dataGridView2.Rows.Count;
+                }
             }
 
             label1.Text = "Total Pesanan : " + count;
             label2.Text = "Total Harga : Rp. " + harga;
+            determine_diskon();
         }
         int transaksiidx = -1;
         private void dataGridView2_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -381,16 +507,102 @@ namespace Kasir
         private void button2_Click(object sender, EventArgs e)
         {
             dataGridView2.Rows.Clear();
+            items.Clear();
             int harga = 0;
             int count = 0;
             for (int i = 0; i < dataGridView2.Rows.Count; i++)
             {
-                harga += Convert.ToInt32(dataGridView2.Rows[i].Cells[3].Value.ToString());
-                count += Convert.ToInt32(dataGridView2.Rows[i].Cells[2].Value.ToString());
+                if (dataGridView2.Rows[i].DefaultCellStyle.BackColor == DataGridView.DefaultBackColor)
+                {
+                    harga += Convert.ToInt32(dataGridView2.Rows[i].Cells[2].Value.ToString());
+                    count = dataGridView2.Rows.Count;
+                }
             }
 
             label1.Text = "Total Pesanan : " + count;
             label2.Text = "Total Harga : Rp. " + harga;
+            determine_diskon();
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+            loadgrid(textBox2.Text);
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            if (dataGridView2.Rows.Count>1)
+            {
+                Program.conn.Open();
+                MySqlTransaction trans = Program.conn.BeginTransaction();
+                try
+                {
+                    MySqlCommand cmd = new MySqlCommand("set autocommit = 0;SET FOREIGN_KEY_CHECKS=0;");
+                    cmd.Connection = Program.conn;
+                    cmd.ExecuteNonQuery();
+
+                    cmd = new MySqlCommand("insert into orders values (@ID,@TOTAL,@TANGGAL)");
+                    cmd.Connection = Program.conn;
+                    cmd.Parameters.AddWithValue("@ID", textBox1.Text);
+                    cmd.Parameters.AddWithValue("@TOTAL", label2.Text.Substring(17));
+                    cmd.Parameters.AddWithValue("@TANGGAL", DateTime.Now.ToString("yyyy-MM-dd"));
+                    cmd.ExecuteNonQuery();
+
+                    
+                    for (int i = 0; i < dataGridView2.Rows.Count; i++)
+                    {
+                        cmd = new MySqlCommand("select it.it_id from item it where it.it_nama = '" + dataGridView2.Rows[i].Cells[1].Value.ToString() + "'");
+                        cmd.Connection = Program.conn;
+                        string id = cmd.ExecuteScalar().ToString();
+
+                        int price = 0;
+                        if (dataGridView2.Rows[i].DefaultCellStyle.BackColor!=Color.Green && dataGridView2.Rows[i].DefaultCellStyle.BackColor != Color.Orange)
+                        {
+                            price = Convert.ToInt32(dataGridView2.Rows[i].Cells[2].Value.ToString());
+                        }
+                        else
+                        {
+                            price = 0;
+                        }
+
+                        cmd = new MySqlCommand("insert into ordered_item values (0,@ID,@ITID,@PRICE)");
+                        cmd.Connection = Program.conn;
+                        cmd.Parameters.AddWithValue("@ID", textBox1.Text);
+                        cmd.Parameters.AddWithValue("@ITID", id);
+                        cmd.Parameters.AddWithValue("@PRICE", price);
+
+                        cmd.ExecuteNonQuery();
+                    }
+                    if (comboBox4.SelectedItem.ToString() != "")
+                    {
+                        cmd = new MySqlCommand("select us.us_id from user us where us.us_name = '" + comboBox4.SelectedItem.ToString() + "'",Program.conn);
+                        string name = cmd.ExecuteScalar().ToString();
+
+                        cmd = new MySqlCommand("insert into user_ordered values (@ID1,@ID2)");
+                        cmd.Connection = Program.conn;
+                        cmd.Parameters.AddWithValue("@ID1", name);
+                        cmd.Parameters.AddWithValue("@ID2", textBox1.Text);
+                        cmd.ExecuteNonQuery();
+                    }
+                    cmd = new MySqlCommand("SET FOREIGN_KEY_CHECKS=1;");
+                    cmd.Connection = Program.conn;
+                    cmd.ExecuteNonQuery();
+                    trans.Commit();
+                    MessageBox.Show("Berhasil");
+                    dataGridView2.Rows.Clear();
+                    generateID();
+                }
+                catch (Exception ex)
+                {
+                    trans.Rollback();
+                    Console.WriteLine(ex.Message);
+                }
+                Program.conn.Close();
+            }
+            else
+            {
+                MessageBox.Show("Pesan lebih dari 1!");
+            }
         }
     }
 }

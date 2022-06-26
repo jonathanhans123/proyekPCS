@@ -42,9 +42,12 @@ namespace Kasir
             // 
             // dataGridView1
             // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(12, 47);
             this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 24;
             this.dataGridView1.Size = new System.Drawing.Size(592, 391);
@@ -68,6 +71,7 @@ namespace Kasir
             this.button1.TabIndex = 2;
             this.button1.Text = "Laporan Sepatu Paling Banyak Dijual";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
@@ -77,6 +81,7 @@ namespace Kasir
             this.button2.TabIndex = 3;
             this.button2.Text = "Laporan Brand Paling Banyak Dijual";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button3
             // 
@@ -86,6 +91,7 @@ namespace Kasir
             this.button3.TabIndex = 4;
             this.button3.Text = "Laporan Tipe Paling Banyak Dijual";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // button4
             // 
@@ -95,6 +101,7 @@ namespace Kasir
             this.button4.TabIndex = 5;
             this.button4.Text = "Laporan User Paling Banyak Beli";
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // button5
             // 
@@ -104,6 +111,7 @@ namespace Kasir
             this.button5.TabIndex = 6;
             this.button5.Text = "Laporan Total Transaksi";
             this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // button6
             // 
@@ -131,6 +139,7 @@ namespace Kasir
             this.Controls.Add(this.dataGridView1);
             this.Name = "FormTransaksi";
             this.Text = "FormTransaksi";
+            this.Load += new System.EventHandler(this.FormTransaksi_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
