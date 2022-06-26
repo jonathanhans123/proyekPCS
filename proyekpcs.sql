@@ -122,46 +122,62 @@ insert  into `merk`(`me_id`,`me_name`) values
 (8,'Columbia'),
 (10,'Adidas');
 
-/*Table structure for table `order` */
-
-DROP TABLE IF EXISTS `order`;
-
-CREATE TABLE `order` (
-  `or_id` int(100) NOT NULL AUTO_INCREMENT,
-  `us_id` int(100) DEFAULT NULL,
-  `or_hargatotal` varchar(1000) NOT NULL,
-  `or_tanggalorder` date NOT NULL,
-  PRIMARY KEY (`or_id`),
-  KEY `fk3` (`us_id`),
-  CONSTRAINT `fk3` FOREIGN KEY (`us_id`) REFERENCES `user` (`us_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
-
-/*Data for the table `order` */
-
-insert  into `order`(`or_id`,`us_id`,`or_hargatotal`,`or_tanggalorder`) values 
-(1,1,'6396000','0000-00-00'),
-(2,1,'6396000','0000-00-00');
-
 /*Table structure for table `ordered_item` */
 
 DROP TABLE IF EXISTS `ordered_item`;
 
 CREATE TABLE `ordered_item` (
+  `oi_id` int(100) NOT NULL AUTO_INCREMENT,
   `or_id` int(100) NOT NULL,
   `it_id` int(100) NOT NULL,
-  `oi_itemprice` varchar(100) NOT NULL,
-  `oi_quantity` int(100) NOT NULL,
-  PRIMARY KEY (`or_id`,`it_id`),
+  `oi_itemprice` bigint(255) NOT NULL,
+  PRIMARY KEY (`oi_id`,`or_id`,`it_id`),
+  KEY `oi_id` (`oi_id`),
+  KEY `fk4` (`or_id`),
   KEY `fk5` (`it_id`),
-  CONSTRAINT `fk4` FOREIGN KEY (`or_id`) REFERENCES `order` (`or_id`),
+  CONSTRAINT `fk4` FOREIGN KEY (`or_id`) REFERENCES `orders` (`or_id`),
   CONSTRAINT `fk5` FOREIGN KEY (`it_id`) REFERENCES `item` (`it_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `ordered_item` */
 
-insert  into `ordered_item`(`or_id`,`it_id`,`oi_itemprice`,`oi_quantity`) values 
-(1,11,'1599000',4),
-(2,11,'1599000',4);
+insert  into `ordered_item`(`oi_id`,`or_id`,`it_id`,`oi_itemprice`) values 
+(1,1,11,1599000),
+(2,2,11,1599000),
+(3,3,11,1439100),
+(8,4,12,1439100),
+(9,4,16,0),
+(21,6,11,0),
+(22,6,11,0),
+(23,6,11,0),
+(24,6,11,1439100),
+(25,6,11,1439100),
+(26,6,11,1439100),
+(27,7,12,0),
+(28,7,12,0),
+(29,7,12,1439100),
+(30,7,12,1439100);
+
+/*Table structure for table `orders` */
+
+DROP TABLE IF EXISTS `orders`;
+
+CREATE TABLE `orders` (
+  `or_id` int(100) NOT NULL AUTO_INCREMENT,
+  `or_hargatotal` bigint(255) NOT NULL,
+  `or_tanggalorder` date NOT NULL,
+  PRIMARY KEY (`or_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
+
+/*Data for the table `orders` */
+
+insert  into `orders`(`or_id`,`or_hargatotal`,`or_tanggalorder`) values 
+(1,6396000,'1970-01-12'),
+(2,6396000,'2022-06-20'),
+(3,639600,'2022-06-15'),
+(4,1439100,'2022-06-26'),
+(6,4317300,'2022-06-26'),
+(7,2878200,'2022-06-26');
 
 /*Table structure for table `tipe` */
 
@@ -188,20 +204,41 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `us_id` int(100) NOT NULL AUTO_INCREMENT,
   `us_name` varchar(100) NOT NULL,
-  `us_password` varchar(100) NOT NULL,
+  `us_username` varchar(100) NOT NULL,
   `us_email` varchar(100) NOT NULL,
   `us_phone` varchar(100) NOT NULL,
   `us_rank` varchar(500) NOT NULL,
   PRIMARY KEY (`us_id`),
   UNIQUE KEY `user_email` (`us_email`),
   UNIQUE KEY `user_phone` (`us_phone`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `user` */
 
-insert  into `user`(`us_id`,`us_name`,`us_password`,`us_email`,`us_phone`,`us_rank`) values 
-(1,'jonathanhans1234','jojo123','jojo@gmail.com','joji2','Bronze'),
-(2,'jojojojo','jojojojojo','jojjojjojoj','jojojojojojojojo','');
+insert  into `user`(`us_id`,`us_name`,`us_username`,`us_email`,`us_phone`,`us_rank`) values 
+(1,'johans','jonathanhans1234','jojo@gmail.com','0812345678','Silver'),
+(2,'jojojo','jojojo','jojo2@gmail.com','08123456789','Bronze');
+
+/*Table structure for table `user_ordered` */
+
+DROP TABLE IF EXISTS `user_ordered`;
+
+CREATE TABLE `user_ordered` (
+  `us_id` int(100) NOT NULL,
+  `or_id` int(100) NOT NULL,
+  PRIMARY KEY (`us_id`,`or_id`),
+  KEY `fk8` (`or_id`),
+  CONSTRAINT `fk6` FOREIGN KEY (`us_id`) REFERENCES `user` (`us_id`),
+  CONSTRAINT `fk7` FOREIGN KEY (`or_id`) REFERENCES `orders` (`or_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+/*Data for the table `user_ordered` */
+
+insert  into `user_ordered`(`us_id`,`or_id`) values 
+(1,1),
+(1,2),
+(1,6),
+(2,7);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
