@@ -45,6 +45,7 @@ namespace Kasir
             Program.conn.Close();
             loadgrid();
             loadcombo();
+            generateID();
             dataGridView2.Columns[0].Width = 25;
             dataGridView2.Columns[2].Width = 85;
 
@@ -541,14 +542,41 @@ namespace Kasir
                     cmd.Connection = Program.conn;
                     cmd.ExecuteNonQuery();
 
+                    string rank = "";
+                    if (comboBox4.SelectedItem.ToString() != "")
+                    {
+                        cmd = new MySqlCommand("select us.us_id from user us where us.us_name = '" + comboBox4.SelectedItem.ToString() + "'", Program.conn);
+                        string name = cmd.ExecuteScalar().ToString();
+
+                        cmd = new MySqlCommand("select us.us_rank from user us where us.us_name = '" + comboBox4.SelectedItem.ToString() + "'", Program.conn);
+                        rank = cmd.ExecuteScalar().ToString();
+
+                        cmd = new MySqlCommand("insert into user_ordered values (@ID1,@ID2)");
+                        cmd.Connection = Program.conn;
+                        cmd.Parameters.AddWithValue("@ID1", name);
+                        cmd.Parameters.AddWithValue("@ID2", textBox1.Text);
+                        cmd.ExecuteNonQuery();
+                    }
+                    int total = Convert.ToInt32(label2.Text.Substring(17));
+                    if (rank == "Bronze")
+                    {
+                        total = total * 95 / 100;
+                    }else if (rank == "Silver")
+                    {
+                        total = total * 90 / 100;
+                    }
+                    else
+                    {
+                        total = total * 85 / 100;
+                    }
+
                     cmd = new MySqlCommand("insert into orders values (@ID,@TOTAL,@TANGGAL)");
                     cmd.Connection = Program.conn;
                     cmd.Parameters.AddWithValue("@ID", textBox1.Text);
-                    cmd.Parameters.AddWithValue("@TOTAL", label2.Text.Substring(17));
+                    cmd.Parameters.AddWithValue("@TOTAL", total);
                     cmd.Parameters.AddWithValue("@TANGGAL", DateTime.Now.ToString("yyyy-MM-dd"));
                     cmd.ExecuteNonQuery();
 
-                    
                     for (int i = 0; i < dataGridView2.Rows.Count; i++)
                     {
                         cmd = new MySqlCommand("select it.it_id from item it where it.it_nama = '" + dataGridView2.Rows[i].Cells[1].Value.ToString() + "'");
@@ -573,17 +601,7 @@ namespace Kasir
 
                         cmd.ExecuteNonQuery();
                     }
-                    if (comboBox4.SelectedItem.ToString() != "")
-                    {
-                        cmd = new MySqlCommand("select us.us_id from user us where us.us_name = '" + comboBox4.SelectedItem.ToString() + "'",Program.conn);
-                        string name = cmd.ExecuteScalar().ToString();
-
-                        cmd = new MySqlCommand("insert into user_ordered values (@ID1,@ID2)");
-                        cmd.Connection = Program.conn;
-                        cmd.Parameters.AddWithValue("@ID1", name);
-                        cmd.Parameters.AddWithValue("@ID2", textBox1.Text);
-                        cmd.ExecuteNonQuery();
-                    }
+                    
                     cmd = new MySqlCommand("SET FOREIGN_KEY_CHECKS=1;");
                     cmd.Connection = Program.conn;
                     cmd.ExecuteNonQuery();

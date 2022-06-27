@@ -76,5 +76,13 @@ namespace Kasir
             FormReport report = new FormReport("user");
             report.ShowDialog();
         }
+
+        private void dataGridView1_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int idx = e.RowIndex;
+
+            FormTransaksiDetail detail = new FormTransaksiDetail(Convert.ToInt32(dataGridView1.Rows[idx].Cells[0].Value.ToString()));
+            detail.ShowDialog();
+        }
     }
 }

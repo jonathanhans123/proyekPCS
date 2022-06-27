@@ -55,7 +55,7 @@ namespace Kasir
             textBox2.Text = dataGridView1.Rows[idx].Cells[2].Value.ToString();
             textBox4.Text = dataGridView1.Rows[idx].Cells[3].Value.ToString();
             textBox5.Text = dataGridView1.Rows[idx].Cells[4].Value.ToString();
-
+            button2.Enabled = false;
             button3.Enabled = true;
             button4.Enabled = true;
             button5.Enabled = true;
@@ -69,6 +69,8 @@ namespace Kasir
         private void clear()
         {
             loadgrid();
+            idx = -1;
+            button2.Enabled = true;
             button3.Enabled = false;
             button4.Enabled = false;
             button5.Enabled = false;
@@ -140,6 +142,25 @@ namespace Kasir
                 MySqlCommand cmd = new MySqlCommand(query, Program.conn);
                 cmd.Parameters.Add(new MySqlParameter("ID", dataGridView1.Rows[idx].Cells[0].Value.ToString()));
                 cmd.Parameters.Add(new MySqlParameter("RANK", rank));
+
+                Program.conn.Open();
+                cmd.ExecuteNonQuery();
+                Program.conn.Close();
+                MessageBox.Show("Berhasil Upgrade");
+                clear();
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if(textBox1.Text!=""&& textBox2.Text != "" && textBox5.Text != "" && textBox4.Text != "")
+            {
+                string query = "INSERT INTO user VALUES(0,@NAME,@USERNAME,@EMAIL,@PHONE,'Bronze')";
+                MySqlCommand cmd = new MySqlCommand(query, Program.conn);
+                cmd.Parameters.Add(new MySqlParameter("NAME", textBox1.Text));
+                cmd.Parameters.Add(new MySqlParameter("USERNAME", textBox2.Text));
+                cmd.Parameters.Add(new MySqlParameter("EMAIL", textBox4.Text));
+                cmd.Parameters.Add(new MySqlParameter("PHONE", textBox5.Text));
 
                 Program.conn.Open();
                 cmd.ExecuteNonQuery();

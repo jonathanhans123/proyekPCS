@@ -132,6 +132,12 @@
     <Compile Include="FormTransaksi.Designer.cs">
       <DependentUpon>FormTransaksi.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormTransaksiDetail.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormTransaksiDetail.Designer.cs">
+      <DependentUpon>FormTransaksiDetail.cs</DependentUpon>
+    </Compile>
     <Compile Include="Item.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -178,6 +184,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormTransaksi.resx">
       <DependentUpon>FormTransaksi.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormTransaksiDetail.resx">
+      <DependentUpon>FormTransaksiDetail.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

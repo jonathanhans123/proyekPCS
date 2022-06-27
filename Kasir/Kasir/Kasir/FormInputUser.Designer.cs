@@ -44,6 +44,7 @@ namespace Kasir
             this.button5 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
+            this.button2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -138,7 +139,7 @@ namespace Kasir
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(94, 390);
+            this.button3.Location = new System.Drawing.Point(157, 401);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(119, 37);
             this.button3.TabIndex = 13;
@@ -148,7 +149,7 @@ namespace Kasir
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(229, 390);
+            this.button4.Location = new System.Drawing.Point(292, 401);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(119, 37);
             this.button4.TabIndex = 14;
@@ -158,7 +159,7 @@ namespace Kasir
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(364, 390);
+            this.button5.Location = new System.Drawing.Point(427, 401);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(119, 37);
             this.button5.TabIndex = 15;
@@ -168,7 +169,7 @@ namespace Kasir
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(500, 390);
+            this.button6.Location = new System.Drawing.Point(563, 401);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(119, 37);
             this.button6.TabIndex = 16;
@@ -186,11 +187,22 @@ namespace Kasir
             this.label6.TabIndex = 17;
             this.label6.Text = "Membership";
             // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(21, 401);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(119, 37);
+            this.button2.TabIndex = 18;
+            this.button2.Text = "Add";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
             // FormInputUser
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(710, 450);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.button6);
             this.Controls.Add(this.button5);
@@ -232,5 +244,6 @@ namespace Kasir
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Button button2;
     }
 }
