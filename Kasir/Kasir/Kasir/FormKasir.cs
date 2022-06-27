@@ -125,7 +125,7 @@ namespace Kasir
             if (tipe != "Semua")
             { tipe = "'" + tipe + "'"; }
             else { tipe = "ti.ti_name"; }
-            string query = "SELECT it.`it_nama` AS 'Nama',CONCAT('Rp. ', FORMAT(it.it_price, 'c', 'id-ID')) AS 'Harga' FROM item it,merk me, tipe ti WHERE it.`me_id`= me.`me_id` AND it.`ti_id` = ti.`ti_id` AND me.me_name ="+merk+" AND ti.ti_name = "+tipe+" AND it.it_size = "+ukuran+" AND it.it_price >= "+min+" AND it.it_price <= "+max+" and it_status = 1 ORDER BY it.it_id";
+            string query = "SELECT it.`it_nama` AS 'Nama',CONCAT('Rp. ', FORMAT(it.it_price, 'c', 'id-ID')) AS 'Harga',it.it_stock as 'Stock'  FROM item it,merk me, tipe ti WHERE it.`me_id`= me.`me_id` AND it.`ti_id` = ti.`ti_id` AND me.me_name =" + merk+" AND ti.ti_name = "+tipe+" AND it.it_size = "+ukuran+" AND it.it_price >= "+min+" AND it.it_price <= "+max+" and it_status = 1 ORDER BY it.it_id";
             MySqlCommand cmd = new MySqlCommand(query, Program.conn);
 
             Program.conn.Open();
@@ -224,9 +224,10 @@ namespace Kasir
             }
         }
         DataTable dtdiskon;
+        int idx = -1;
         private void dataGridView1_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            int idx = e.RowIndex;
+            idx = e.RowIndex;
             numericUpDown1.Value = 1;
             labelNama.Text = dtitem.Rows[idx][0].ToString();
             labelMerk.Text = dtitemdesc.Rows[idx][0].ToString();
@@ -532,7 +533,7 @@ namespace Kasir
 
         private void button4_Click(object sender, EventArgs e)
         {
-            if (dataGridView2.Rows.Count>1)
+            if (dataGridView2.Rows.Count>=1)
             {
                 Program.conn.Open();
                 MySqlTransaction trans = Program.conn.BeginTransaction();
@@ -542,38 +543,10 @@ namespace Kasir
                     cmd.Connection = Program.conn;
                     cmd.ExecuteNonQuery();
 
-                    string rank = "";
-                    if (comboBox4.SelectedItem.ToString() != "")
-                    {
-                        cmd = new MySqlCommand("select us.us_id from user us where us.us_name = '" + comboBox4.SelectedItem.ToString() + "'", Program.conn);
-                        string name = cmd.ExecuteScalar().ToString();
-
-                        cmd = new MySqlCommand("select us.us_rank from user us where us.us_name = '" + comboBox4.SelectedItem.ToString() + "'", Program.conn);
-                        rank = cmd.ExecuteScalar().ToString();
-
-                        cmd = new MySqlCommand("insert into user_ordered values (@ID1,@ID2)");
-                        cmd.Connection = Program.conn;
-                        cmd.Parameters.AddWithValue("@ID1", name);
-                        cmd.Parameters.AddWithValue("@ID2", textBox1.Text);
-                        cmd.ExecuteNonQuery();
-                    }
-                    int total = Convert.ToInt32(label2.Text.Substring(17));
-                    if (rank == "Bronze")
-                    {
-                        total = total * 95 / 100;
-                    }else if (rank == "Silver")
-                    {
-                        total = total * 90 / 100;
-                    }
-                    else
-                    {
-                        total = total * 85 / 100;
-                    }
-
                     cmd = new MySqlCommand("insert into orders values (@ID,@TOTAL,@TANGGAL)");
                     cmd.Connection = Program.conn;
                     cmd.Parameters.AddWithValue("@ID", textBox1.Text);
-                    cmd.Parameters.AddWithValue("@TOTAL", total);
+                    cmd.Parameters.AddWithValue("@TOTAL", label2.Text.Substring(17));
                     cmd.Parameters.AddWithValue("@TANGGAL", DateTime.Now.ToString("yyyy-MM-dd"));
                     cmd.ExecuteNonQuery();
 
@@ -601,25 +574,86 @@ namespace Kasir
 
                         cmd.ExecuteNonQuery();
                     }
-                    
+
+                    string rank = "Tidak ada user";
+                    if (comboBox4.SelectedItem.ToString() != "")
+                    {
+                        rank = "";
+                        cmd = new MySqlCommand("select us.us_id from user us where us.us_name = '" + comboBox4.SelectedItem.ToString() + "'", Program.conn);
+                        string name = cmd.ExecuteScalar().ToString();
+
+                        cmd = new MySqlCommand("select us.us_rank from user us where us.us_name = '" + comboBox4.SelectedItem.ToString() + "'", Program.conn);
+                        rank = cmd.ExecuteScalar().ToString();
+
+                        cmd = new MySqlCommand("insert into user_ordered values (@ID1,@ID2)");
+                        cmd.Connection = Program.conn;
+                        cmd.Parameters.AddWithValue("@ID1", name);
+                        cmd.Parameters.AddWithValue("@ID2", textBox1.Text);
+                        cmd.ExecuteNonQuery();
+                    }
+                    int total = Convert.ToInt32(label2.Text.Substring(17));
+                    if (rank == "Bronze")
+                    {
+                        total = total * 95 / 100;
+                        rank += " (+5% Diskon)";
+                    }
+                    else if (rank == "Silver")
+                    {
+                        total = total * 90 / 100;
+                        rank += " (+10% Diskon)";
+                    }
+                    else
+                    {
+                        total = total * 85 / 100;
+                        rank += " (+15% Diskon)";
+                    }
+                    cmd = new MySqlCommand("UPDATE orders SET or_hargatotal = " + total + " WHERE or_id = " + textBox1.Text,Program.conn);
+                    cmd.ExecuteNonQuery();
+
                     cmd = new MySqlCommand("SET FOREIGN_KEY_CHECKS=1;");
                     cmd.Connection = Program.conn;
                     cmd.ExecuteNonQuery();
+
                     trans.Commit();
-                    MessageBox.Show("Berhasil");
-                    dataGridView2.Rows.Clear();
-                    generateID();
+
+                    MessageBox.Show("Total Transaksi : Rp." + total + Environment.NewLine +
+                                    "Total Barang : " + label1.Text.Substring(16) + " barang"+Environment.NewLine+
+                                    "Tanggal Beli : "+ DateTime.Now.ToString("dd MMMM yyyy")+ Environment.NewLine+
+                                    "Rank User : "+rank+Environment.NewLine+
+                                    "Berhasil");
                 }
                 catch (Exception ex)
                 {
                     trans.Rollback();
                     Console.WriteLine(ex.Message);
                 }
+                dataGridView2.Rows.Clear();
                 Program.conn.Close();
+                generateID();
             }
             else
             {
                 MessageBox.Show("Pesan lebih dari 1!");
+            }
+        }
+
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+            if (idx != -1)
+            {
+                int stock = Convert.ToInt32(dataGridView1.Rows[idx].Cells[2].Value.ToString());
+                for (int i = 0; i < dataGridView2.Rows.Count; i++)
+                {
+                    if (dataGridView2.Rows[i].Cells[1].Value.ToString() == labelNama.Text)
+                    {
+                        stock++;
+                    }
+                }
+                if (numericUpDown1.Value > stock)
+                {
+                    numericUpDown1.Value = stock;
+                    MessageBox.Show("Melebihi Stock!");
+                }
             }
         }
     }
