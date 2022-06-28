@@ -20,11 +20,11 @@ namespace Kasir
             InitializeComponent();
             if (add == "merk")
             {
-                textBox1.Text = "Add Merk";
+                label1.Text = "Add Merk";
             }
             else
             {
-                textBox1.Text = "Add Tipe";
+                label1.Text = "Add Tipe";
             }
             this.barang = barang;
             this.add = add;
