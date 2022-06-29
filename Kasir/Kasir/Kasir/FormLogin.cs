@@ -56,6 +56,8 @@ namespace Kasir
                         kasir.Show();
                         this.Hide();
                     }
+                    textBox1.Text = "";
+                    textBox2.Text = "";
                 }
                 else
                 {

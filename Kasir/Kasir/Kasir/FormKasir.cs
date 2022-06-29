@@ -562,6 +562,7 @@ namespace Kasir
                         stock--;
 
                         cmd = new MySqlCommand("update item set it_stock = " + stock + " where it_id = "+id, Program.conn);
+                        cmd.ExecuteNonQuery();
 
                         int price = 0;
                         if (dataGridView2.Rows[i].DefaultCellStyle.BackColor!=Color.Green && dataGridView2.Rows[i].DefaultCellStyle.BackColor != Color.Orange)
@@ -639,6 +640,7 @@ namespace Kasir
                 dataGridView2.Rows.Clear();
                 button2_Click(null, null);
                 Program.conn.Close();
+                loadgrid();
                 generateID();
             }
             else
