@@ -229,7 +229,7 @@ namespace Kasir
         private void dataGridView1_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             idx = e.RowIndex;
-            numericUpDown1.Value = 1;
+            numericUpDown1.Value = 0;
             labelNama.Text = dtitem.Rows[idx][0].ToString();
             labelMerk.Text = dtitemdesc.Rows[idx][0].ToString();
             labelTipe.Text = dtitemdesc.Rows[idx][1].ToString();

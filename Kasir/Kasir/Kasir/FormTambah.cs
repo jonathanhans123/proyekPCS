@@ -40,27 +40,67 @@ namespace Kasir
             //tambah
             if (add == "merk")
             {
-                string query = "INSERT INTO merk VALUES (0,?NAME)";
+                if (textBox1.Text != "")
+                {
+                    string query = "select count(*) from merk me where me_name =?NAME";
+                    MySqlCommand cmd = new MySqlCommand(query, Program.conn);
+                    cmd.Parameters.Add(new MySqlParameter("NAME", textBox1.Text));
+                    Program.conn.Open();
+                    int count = Convert.ToInt32(cmd.ExecuteNonQuery().ToString());
+                    Program.conn.Close();
+                    if (count == 0)
+                    {
+                        query = "INSERT INTO merk VALUES (0,?NAME)";
 
-                MySqlCommand cmd = new MySqlCommand(query,Program.conn);
-                cmd.Parameters.Add(new MySqlParameter("NAME", textBox1.Text));
+                        cmd = new MySqlCommand(query, Program.conn);
+                        cmd.Parameters.Add(new MySqlParameter("NAME", textBox1.Text));
 
-                Program.conn.Open();
-                cmd.ExecuteNonQuery();
-                Program.conn.Close();
-                MessageBox.Show("Berhasil Add");
+                        Program.conn.Open();
+                        cmd.ExecuteNonQuery();
+                        Program.conn.Close();
+                        MessageBox.Show("Berhasil Add");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Sudah ada Brand");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Isi Field");
+                }
             }
             else
             {
-                string query = "INSERT INTO tipe VALUES (0,?NAME)";
+                if (textBox1.Text != "")
+                {
+                    string query = "select count(*) from tipe ti where ti_name =?NAME";
+                    MySqlCommand cmd = new MySqlCommand(query, Program.conn);
+                    cmd.Parameters.Add(new MySqlParameter("NAME", textBox1.Text));
+                    Program.conn.Open();
+                    int count = Convert.ToInt32(cmd.ExecuteNonQuery().ToString());
+                    Program.conn.Close();
+                    if (count == 0)
+                    {
+                        query = "INSERT INTO tipe VALUES (0,?NAME)";
 
-                MySqlCommand cmd = new MySqlCommand(query, Program.conn);
-                cmd.Parameters.Add(new MySqlParameter("NAME", textBox1.Text));
+                        cmd = new MySqlCommand(query, Program.conn);
+                        cmd.Parameters.Add(new MySqlParameter("NAME", textBox1.Text));
 
-                Program.conn.Open();
-                cmd.ExecuteNonQuery();
-                Program.conn.Close();
-                MessageBox.Show("Berhasil Add");
+                        Program.conn.Open();
+                        cmd.ExecuteNonQuery();
+                        Program.conn.Close();
+                        MessageBox.Show("Berhasil Add");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Sudah ada Brand");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Isi Field");
+                }
             }
         }
 

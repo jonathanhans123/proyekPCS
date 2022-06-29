@@ -130,7 +130,7 @@ namespace Kasir
                 if (dataGridView1.Rows[idx].Cells[5].Value.ToString() == "Bronze")
                 {
                     rank = "Silver";
-                }else
+                }else 
                 {
                     rank = "Gold";
                 }
