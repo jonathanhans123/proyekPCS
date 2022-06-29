@@ -13,9 +13,11 @@ namespace Kasir
 {
     public partial class FormInputClient : Form
     {
-        public FormInputClient()
+        FormAdmin admin;
+        public FormInputClient(FormAdmin admin)
         {
             InitializeComponent();
+            this.admin = admin;
         }
 
         private void FormInputClient_Load(object sender, EventArgs e)
@@ -176,6 +178,12 @@ namespace Kasir
             button3.Enabled = false;
             button4.Enabled = false;
             button5.Enabled = true;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            admin.Show();
+            this.Close();
         }
     }
 }

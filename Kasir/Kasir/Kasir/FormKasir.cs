@@ -670,7 +670,7 @@ namespace Kasir
 
         private void button12_Click(object sender, EventArgs e)
         {
-            FormListDiscount diskon = new FormListDiscount(this);
+            FormListDiscountKasir diskon = new FormListDiscountKasir(this);
             this.Hide();
             diskon.Show();
         }

@@ -11,21 +11,19 @@ using MySql.Data.MySqlClient;
 
 namespace Kasir
 {
-    public partial class FormListDiscount : Form
+    public partial class FormListDiscountKasir : Form
     {
-        FormInputBarang barang;
-        public FormListDiscount(FormInputBarang barang)
+        FormKasir kasir;
+        public FormListDiscountKasir(FormKasir kasir)
         {
             InitializeComponent();
-            this.barang = barang;
+            this.kasir = kasir;
         }
-        
 
-        private void FormListDiscount_Load(object sender, EventArgs e)
+        private void FormListDiscountKasir_Load(object sender, EventArgs e)
         {
             loadgrid();
             loadcombo();
-            button3.Enabled = false;
         }
         private void loadcombo()
         {
@@ -53,17 +51,14 @@ namespace Kasir
 
         private void button2_Click(object sender, EventArgs e)
         {
-            barang.Show();
+            kasir.Show();
             this.Close();
         }
 
         int idx = -1;
         private void dataGridView1_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            idx = e.RowIndex;
-
-            label3.Text = dataGridView1.Rows[idx].Cells[0].Value.ToString();
-            button3.Enabled = true;
+            
         }
 
         private void button3_Click(object sender, EventArgs e)

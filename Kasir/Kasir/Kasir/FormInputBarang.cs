@@ -57,12 +57,14 @@ namespace Kasir
         {
             FormTambah tambah = new FormTambah(this, "merk");
             tambah.ShowDialog();
+            loadcombo();
         }
 
         private void button8_Click(object sender, EventArgs e)
         {
             FormTambah tambah = new FormTambah(this, "tipe");
             tambah.ShowDialog();
+            loadcombo();
         }
 
         private void button5_Click(object sender, EventArgs e)
@@ -155,21 +157,48 @@ namespace Kasir
             //add
             if (textBox2.Text != "" && numericUpDown1.Value != 0 && numericUpDown2.Value != 0 && numericUpDown3.Value != 0)
             {
-                string query = "INSERT INTO item VALUES (0,?NAME,?STOCK,?PRICE,?SIZE,?ME_ID,?TI_ID,1);";
-
+                string query = "select count(*) from item it where it.it_nama=?NAME and it.it_size=?SIZE";
                 MySqlCommand cmd = new MySqlCommand(query, Program.conn);
                 cmd.Parameters.Add(new MySqlParameter("NAME", textBox2.Text));
-                cmd.Parameters.Add(new MySqlParameter("STOCK", numericUpDown3.Value));
-                cmd.Parameters.Add(new MySqlParameter("PRICE", numericUpDown1.Value));
                 cmd.Parameters.Add(new MySqlParameter("SIZE", numericUpDown2.Value));
-                cmd.Parameters.Add(new MySqlParameter("ME_ID", comboBox1.SelectedValue));
-                cmd.Parameters.Add(new MySqlParameter("TI_ID", comboBox2.SelectedValue));
-
                 Program.conn.Open();
-                cmd.ExecuteNonQuery();
+                int count = Convert.ToInt32(cmd.ExecuteScalar().ToString());
                 Program.conn.Close();
-                MessageBox.Show("Berhasil Add");
-                FormInputBarang_Load(null, null);
+                if (count == 0)
+                {
+                    cmd = new MySqlCommand("SET FOREIGN_KEY_CHECKS=0;");
+                    cmd.Connection = Program.conn;
+                    Program.conn.Open();
+                    cmd.ExecuteNonQuery();
+                    Program.conn.Close();
+
+                    query = "INSERT INTO item VALUES (0,?NAME,?STOCK,?PRICE,?SIZE,?TI_ID,?ME_ID,1);";
+                    cmd = new MySqlCommand(query, Program.conn);
+                    cmd.Parameters.Add(new MySqlParameter("NAME", textBox2.Text));
+                    cmd.Parameters.Add(new MySqlParameter("STOCK", numericUpDown3.Value));
+                    cmd.Parameters.Add(new MySqlParameter("PRICE", numericUpDown1.Value));
+                    cmd.Parameters.Add(new MySqlParameter("SIZE", numericUpDown2.Value));
+                    cmd.Parameters.Add(new MySqlParameter("ME_ID", comboBox1.SelectedValue));
+                    cmd.Parameters.Add(new MySqlParameter("TI_ID", comboBox2.SelectedValue));
+
+                    Program.conn.Open();
+                    cmd.ExecuteNonQuery();
+                    Program.conn.Close();
+
+                    cmd = new MySqlCommand("SET FOREIGN_KEY_CHECKS=1;");
+                    cmd.Connection = Program.conn;
+                    Program.conn.Open();
+                    cmd.ExecuteNonQuery();
+                    Program.conn.Close();
+
+                    MessageBox.Show("Berhasil Add");
+                    FormInputBarang_Load(null, null);
+                    loadgrid();
+                }
+                else
+                {
+                    MessageBox.Show("Item sudah ada");
+                }
             }
             else
             {
@@ -182,22 +211,36 @@ namespace Kasir
             //edit
             if (textBox2.Text != "" && numericUpDown1.Value != 0 && numericUpDown2.Value != 0 && numericUpDown3.Value != 0)
             {
-                string query = "UPDATE item SET it_nama = ?NAME,it_stock=?STOCK,it_price=?PRICE,it_size=?SIZE,me_id=?ME_ID,ti_id=?TI_ID where it_id=?IT_ID;";
-
+                string query = "select count(*) from item it where it.it_nama=?NAME and it.it_size=?SIZE";
                 MySqlCommand cmd = new MySqlCommand(query, Program.conn);
                 cmd.Parameters.Add(new MySqlParameter("NAME", textBox2.Text));
-                cmd.Parameters.Add(new MySqlParameter("STOCK", numericUpDown3.Value));
-                cmd.Parameters.Add(new MySqlParameter("PRICE", numericUpDown1.Value));
                 cmd.Parameters.Add(new MySqlParameter("SIZE", numericUpDown2.Value));
-                cmd.Parameters.Add(new MySqlParameter("ME_ID", comboBox1.SelectedValue));
-                cmd.Parameters.Add(new MySqlParameter("TI_ID", comboBox2.SelectedValue));
-                cmd.Parameters.Add(new MySqlParameter("IT_ID", textBox1.Text));
-
                 Program.conn.Open();
-                cmd.ExecuteNonQuery();
+                int count = Convert.ToInt32(cmd.ExecuteScalar().ToString());
                 Program.conn.Close();
-                MessageBox.Show("Berhasil Edit");
-                FormInputBarang_Load(null, null);
+                if (count == 0)
+                {
+                    query = "UPDATE item SET it_nama = ?NAME,it_stock=?STOCK,it_price=?PRICE,it_size=?SIZE,me_id=?ME_ID,ti_id=?TI_ID where it_id=?IT_ID;";
+
+                    cmd = new MySqlCommand(query, Program.conn);
+                    cmd.Parameters.Add(new MySqlParameter("NAME", textBox2.Text));
+                    cmd.Parameters.Add(new MySqlParameter("STOCK", numericUpDown3.Value));
+                    cmd.Parameters.Add(new MySqlParameter("PRICE", numericUpDown1.Value));
+                    cmd.Parameters.Add(new MySqlParameter("SIZE", numericUpDown2.Value));
+                    cmd.Parameters.Add(new MySqlParameter("ME_ID", comboBox1.SelectedValue));
+                    cmd.Parameters.Add(new MySqlParameter("TI_ID", comboBox2.SelectedValue));
+                    cmd.Parameters.Add(new MySqlParameter("IT_ID", textBox1.Text));
+
+                    Program.conn.Open();
+                    cmd.ExecuteNonQuery();
+                    Program.conn.Close();
+                    MessageBox.Show("Berhasil Edit");
+                    FormInputBarang_Load(null, null);
+                }
+                else
+                {
+                    MessageBox.Show("Item sudah ada");
+                }
             }
             else
             {
@@ -231,6 +274,16 @@ namespace Kasir
             {
                 radioButton2.Checked = true;
             }
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Console.WriteLine(comboBox1.SelectedValue);
+        }
+
+        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Console.WriteLine(comboBox2.SelectedValue);
         }
     }
 }

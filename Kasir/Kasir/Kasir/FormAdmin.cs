@@ -47,5 +47,12 @@ namespace Kasir
             login.Show();
             this.Hide();
         }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            FormInputClient client = new FormInputClient(this);
+            this.Hide();
+            client.Show();
+        }
     }
 }

@@ -138,6 +138,12 @@
     <Compile Include="FormKasir.Designer.cs">
       <DependentUpon>FormKasir.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormListDiscountKasir.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormListDiscountKasir.Designer.cs">
+      <DependentUpon>FormListDiscountKasir.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormListDiscount.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -224,6 +230,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormKasir.resx">
       <DependentUpon>FormKasir.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormListDiscountKasir.resx">
+      <DependentUpon>FormListDiscountKasir.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormListDiscount.resx">
       <DependentUpon>FormListDiscount.cs</DependentUpon>
