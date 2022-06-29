@@ -18,7 +18,7 @@ namespace Kasir
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             
-            Application.Run(new FormKasir());
+            Application.Run(new FormLogin());
         }
 
         public static MySqlConnection conn = null;

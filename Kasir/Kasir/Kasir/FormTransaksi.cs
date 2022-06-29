@@ -14,15 +14,28 @@ namespace Kasir
     public partial class FormTransaksi : Form
     {
         FormKasir kasir;
+        FormAdmin admin;
         public FormTransaksi(FormKasir kasir)
         {
             InitializeComponent();
             this.kasir = kasir;
         }
+        public FormTransaksi(FormAdmin admin)
+        {
+            InitializeComponent();
+            this.admin = admin;
+        }
 
         private void button6_Click(object sender, EventArgs e)
         {
-            kasir.Show();
+            if (kasir == null)
+            {
+                admin.Show(); 
+            }
+            else
+            {
+                kasir.Show();
+            }
             this.Close();
         }
 

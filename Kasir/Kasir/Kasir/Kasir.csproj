@@ -84,6 +84,30 @@
       <DependentUpon>CrystalReport1.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="CrystalReport6.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CrystalReport6.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="FormAdmin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormAdmin.Designer.cs">
+      <DependentUpon>FormAdmin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormInputBarangKasir.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormInputBarangKasir.Designer.cs">
+      <DependentUpon>FormInputBarangKasir.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormInputClient.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormInputClient.Designer.cs">
+      <DependentUpon>FormInputClient.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormInputDiscount.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -95,6 +119,12 @@
     </Compile>
     <Compile Include="FormInputBarang.Designer.cs">
       <DependentUpon>FormInputBarang.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormInputUserKasir.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormInputUserKasir.Designer.cs">
+      <DependentUpon>FormInputUserKasir.cs</DependentUpon>
     </Compile>
     <Compile Include="FormInputUser.cs">
       <SubType>Form</SubType>
@@ -113,6 +143,12 @@
     </Compile>
     <Compile Include="FormListDiscount.Designer.cs">
       <DependentUpon>FormListDiscount.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormLogin.Designer.cs">
+      <DependentUpon>FormLogin.cs</DependentUpon>
     </Compile>
     <Compile Include="FormReport.cs">
       <SubType>Form</SubType>
@@ -161,11 +197,27 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>CrystalReport1.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="CrystalReport6.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CrystalReport6.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormAdmin.resx">
+      <DependentUpon>FormAdmin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormInputBarangKasir.resx">
+      <DependentUpon>FormInputBarangKasir.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormInputClient.resx">
+      <DependentUpon>FormInputClient.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormInputDiscount.resx">
       <DependentUpon>FormInputDiscount.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormInputBarang.resx">
       <DependentUpon>FormInputBarang.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormInputUserKasir.resx">
+      <DependentUpon>FormInputUserKasir.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormInputUser.resx">
       <DependentUpon>FormInputUser.cs</DependentUpon>
@@ -175,6 +227,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormListDiscount.resx">
       <DependentUpon>FormListDiscount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormLogin.resx">
+      <DependentUpon>FormLogin.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormReport.resx">
       <DependentUpon>FormReport.cs</DependentUpon>

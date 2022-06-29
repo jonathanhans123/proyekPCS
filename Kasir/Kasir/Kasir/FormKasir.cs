@@ -13,21 +13,23 @@ namespace Kasir
 {
     public partial class FormKasir : Form
     {
-        public FormKasir()
+        FormLogin login;
+        public FormKasir(FormLogin login)
         {
             InitializeComponent();
+            this.login = login;
         }
 
         private void button9_Click(object sender, EventArgs e)
         {
-            FormInputBarang input = new FormInputBarang(this);
+            FormInputBarangKasir input = new FormInputBarangKasir(this);
             input.Show();
             this.Hide();
         }
 
         private void button10_Click(object sender, EventArgs e)
         {
-            FormInputUser input = new FormInputUser(this);
+            FormInputUserKasir input = new FormInputUserKasir(this);
             input.Show();
             this.Hide();
         }
@@ -41,20 +43,19 @@ namespace Kasir
 
         private void FormKasir_Load(object sender, EventArgs e)
         {
-            Program.setConn("localhost", "root", "proyekpcs");
-            Program.conn.Close();
+            
             loadgrid();
             loadcombo();
             generateID();
             dataGridView2.Columns[0].Width = 25;
-            dataGridView2.Columns[2].Width = 85;
+            dataGridView2.Columns[3].Width = 85;
 
             textBox1.Enabled = false;
         }
 
         private void generateID()
         {
-            MySqlCommand cmd = new MySqlCommand("select max(ori.or_id) from orders ori", Program.conn);
+            MySqlCommand cmd = new MySqlCommand("select ifnull(max(ori.or_id),0) from orders ori", Program.conn);
             Program.conn.Open();
             int orderid = Convert.ToInt32(cmd.ExecuteScalar().ToString()) + 1;
             Program.conn.Close();
@@ -137,7 +138,7 @@ namespace Kasir
             da.Fill(dtitem);
             dataGridView1.DataSource = dtitem.DefaultView;
 
-            query = "SELECT me.me_name,ti.ti_name,it.it_size FROM item it,merk me, tipe ti WHERE it.`me_id`= me.`me_id` AND it.`ti_id` = ti.`ti_id` AND me.me_name =" + merk + " AND ti.ti_name = " + tipe + " AND it.it_size = " + ukuran + " AND it.it_price >= " + min + " AND it.it_price <= " + max + " and it_status = 1  ORDER BY it.it_id";
+            query = "SELECT me.me_name,ti.ti_name,it.it_size,it.it_id FROM item it,merk me, tipe ti WHERE it.`me_id`= me.`me_id` AND it.`ti_id` = ti.`ti_id` AND me.me_name =" + merk + " AND ti.ti_name = " + tipe + " AND it.it_size = " + ukuran + " AND it.it_price >= " + min + " AND it.it_price <= " + max + " and it_status = 1  ORDER BY it.it_id";
             cmd = new MySqlCommand(query, Program.conn);
 
             Program.conn.Open();
@@ -366,7 +367,7 @@ namespace Kasir
                 for (int i = 0; i < numericUpDown1.Value; i++)
                 {
                     items.Add(new Item(Convert.ToInt32(dtdiskon.Rows[0][2].ToString()), dtdiskon.Rows[0][0].ToString(), diskon, buy1get1, buy2get3, Convert.ToInt32(dtdiskon.Rows[0][3].ToString())));
-                    dataGridView2.Rows.Add(dataGridView2.Rows.Count + 1, items[items.Count - 1].nama, items[items.Count - 1].harga * (100 - items[items.Count - 1].diskon) / 100);
+                    dataGridView2.Rows.Add(dataGridView2.Rows.Count + 1, items[items.Count - 1].nama,labelUkuran.Text, items[items.Count - 1].harga * (100 - items[items.Count - 1].diskon) / 100);
                 }
 
                 int harga = 0;
@@ -384,7 +385,7 @@ namespace Kasir
                 {
                     if (dataGridView2.Rows[i].DefaultCellStyle.BackColor == DataGridView.DefaultBackColor)
                     {
-                        harga += Convert.ToInt32(dataGridView2.Rows[i].Cells[2].Value.ToString());
+                        harga += Convert.ToInt32(dataGridView2.Rows[i].Cells[3].Value.ToString());
                         count = dataGridView2.Rows.Count;
                     }
                 }
@@ -436,7 +437,7 @@ namespace Kasir
                 {
                     for (int j = 0; j < dataGridView2.Rows.Count; j++)
                     {
-                        if (Convert.ToInt32(dataGridView2.Rows[j].Cells[2].Value.ToString()) == temp[i] 
+                        if (Convert.ToInt32(dataGridView2.Rows[j].Cells[3].Value.ToString()) == temp[i] 
                             && dataGridView2.Rows[j].DefaultCellStyle.BackColor != Color.Green
                             && dataGridView2.Rows[j].DefaultCellStyle.BackColor != Color.Orange)
                         {
@@ -462,7 +463,7 @@ namespace Kasir
                 {
                     for (int j = 0; j < dataGridView2.Rows.Count; j++)
                     {
-                        if (Convert.ToInt32(dataGridView2.Rows[j].Cells[2].Value.ToString()) == temp[i]
+                        if (Convert.ToInt32(dataGridView2.Rows[j].Cells[3].Value.ToString()) == temp[i]
                             && dataGridView2.Rows[j].DefaultCellStyle.BackColor != Color.Orange
                             && dataGridView2.Rows[j].DefaultCellStyle.BackColor != Color.Green)
                         {
@@ -491,7 +492,7 @@ namespace Kasir
             {
                 if (dataGridView2.Rows[i].DefaultCellStyle.BackColor == DataGridView.DefaultBackColor)
                 {
-                    harga += Convert.ToInt32(dataGridView2.Rows[i].Cells[2].Value.ToString());
+                    harga += Convert.ToInt32(dataGridView2.Rows[i].Cells[3].Value.ToString());
                     count = dataGridView2.Rows.Count;
                 }
             }
@@ -516,7 +517,7 @@ namespace Kasir
             {
                 if (dataGridView2.Rows[i].DefaultCellStyle.BackColor == DataGridView.DefaultBackColor)
                 {
-                    harga += Convert.ToInt32(dataGridView2.Rows[i].Cells[2].Value.ToString());
+                    harga += Convert.ToInt32(dataGridView2.Rows[i].Cells[3].Value.ToString());
                     count = dataGridView2.Rows.Count;
                 }
             }
@@ -552,14 +553,20 @@ namespace Kasir
 
                     for (int i = 0; i < dataGridView2.Rows.Count; i++)
                     {
-                        cmd = new MySqlCommand("select it.it_id from item it where it.it_nama = '" + dataGridView2.Rows[i].Cells[1].Value.ToString() + "'");
+                        cmd = new MySqlCommand("select it.it_id from item it where it.it_nama = '" + dataGridView2.Rows[i].Cells[1].Value.ToString() + "' and it.it_size = "+ dataGridView2.Rows[i].Cells[2].Value.ToString() + "");
                         cmd.Connection = Program.conn;
                         string id = cmd.ExecuteScalar().ToString();
+
+                        cmd = new MySqlCommand("select it.it_stock from item it where it.it_id = " + id, Program.conn);
+                        int stock = Convert.ToInt32(cmd.ExecuteScalar().ToString());
+                        stock--;
+
+                        cmd = new MySqlCommand("update item set it_stock = " + stock + " where it_id = "+id, Program.conn);
 
                         int price = 0;
                         if (dataGridView2.Rows[i].DefaultCellStyle.BackColor!=Color.Green && dataGridView2.Rows[i].DefaultCellStyle.BackColor != Color.Orange)
                         {
-                            price = Convert.ToInt32(dataGridView2.Rows[i].Cells[2].Value.ToString());
+                            price = Convert.ToInt32(dataGridView2.Rows[i].Cells[3].Value.ToString());
                         }
                         else
                         {
@@ -576,7 +583,7 @@ namespace Kasir
                     }
 
                     string rank = "Tidak ada user";
-                    if (comboBox4.SelectedItem.ToString() != "")
+                    if (comboBox4.SelectedItem != null)
                     {
                         rank = "";
                         cmd = new MySqlCommand("select us.us_id from user us where us.us_name = '" + comboBox4.SelectedItem.ToString() + "'", Program.conn);
@@ -602,7 +609,7 @@ namespace Kasir
                         total = total * 90 / 100;
                         rank += " (+10% Diskon)";
                     }
-                    else
+                    else if (rank == "Gold")
                     {
                         total = total * 85 / 100;
                         rank += " (+15% Diskon)";
@@ -621,6 +628,8 @@ namespace Kasir
                                     "Tanggal Beli : "+ DateTime.Now.ToString("dd MMMM yyyy")+ Environment.NewLine+
                                     "Rank User : "+rank+Environment.NewLine+
                                     "Berhasil");
+                    FormReport report = new FormReport("receipt",textBox1.Text);
+                    report.ShowDialog();
                 }
                 catch (Exception ex)
                 {
@@ -628,6 +637,7 @@ namespace Kasir
                     Console.WriteLine(ex.Message);
                 }
                 dataGridView2.Rows.Clear();
+                button2_Click(null, null);
                 Program.conn.Close();
                 generateID();
             }
@@ -644,9 +654,10 @@ namespace Kasir
                 int stock = Convert.ToInt32(dataGridView1.Rows[idx].Cells[2].Value.ToString());
                 for (int i = 0; i < dataGridView2.Rows.Count; i++)
                 {
-                    if (dataGridView2.Rows[i].Cells[1].Value.ToString() == labelNama.Text)
+                    if (dataGridView2.Rows[i].Cells[1].Value.ToString() == labelNama.Text &&
+                        dataGridView2.Rows[i].Cells[2].Value.ToString() == labelUkuran.Text)
                     {
-                        stock++;
+                        stock--;
                     }
                 }
                 if (numericUpDown1.Value > stock)
@@ -655,6 +666,19 @@ namespace Kasir
                     MessageBox.Show("Melebihi Stock!");
                 }
             }
+        }
+
+        private void button12_Click(object sender, EventArgs e)
+        {
+            FormListDiscount diskon = new FormListDiscount(this);
+            this.Hide();
+            diskon.Show();
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            login.Show();
+            this.Hide();
         }
     }
 }

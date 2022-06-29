@@ -14,10 +14,16 @@ namespace Kasir
     public partial class FormListDiscount : Form
     {
         FormInputBarang barang;
+        FormKasir kasir;
         public FormListDiscount(FormInputBarang barang)
         {
             InitializeComponent();
             this.barang = barang;
+        }
+        public FormListDiscount(FormKasir kasir)
+        {
+            InitializeComponent();
+            this.kasir = kasir;
         }
 
         private void FormListDiscount_Load(object sender, EventArgs e)
@@ -52,7 +58,14 @@ namespace Kasir
 
         private void button2_Click(object sender, EventArgs e)
         {
-            barang.Show();
+            if (barang == null)
+            {
+                kasir.Show();
+            }
+            else
+            {
+                barang.Show();
+            }
             this.Close();
         }
 

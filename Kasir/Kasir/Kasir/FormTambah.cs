@@ -40,7 +40,7 @@ namespace Kasir
             //tambah
             if (add == "merk")
             {
-                string query = "INSERT INTO merk (0,?NAME)";
+                string query = "INSERT INTO merk VALUES (0,?NAME)";
 
                 MySqlCommand cmd = new MySqlCommand(query,Program.conn);
                 cmd.Parameters.Add(new MySqlParameter("NAME", textBox1.Text));
@@ -52,7 +52,7 @@ namespace Kasir
             }
             else
             {
-                string query = "INSERT INTO tipe (0,?NAME)";
+                string query = "INSERT INTO tipe VALUES (0,?NAME)";
 
                 MySqlCommand cmd = new MySqlCommand(query, Program.conn);
                 cmd.Parameters.Add(new MySqlParameter("NAME", textBox1.Text));

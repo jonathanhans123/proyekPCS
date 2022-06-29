@@ -11,25 +11,23 @@ using MySql.Data.MySqlClient;
 
 namespace Kasir
 {
-    public partial class FormInputBarang : Form
+    public partial class FormInputBarangKasir : Form
     {
-        FormAdmin admin;
-        public FormInputBarang(FormAdmin admin)
+        FormKasir kasir;
+        public FormInputBarangKasir(FormKasir kasir)
         {
             InitializeComponent();
-            this.admin = admin;
+            this.kasir = kasir;
         }
 
-        private void FormInputBarang_Load(object sender, EventArgs e)
+        private void FormInputBarangKasir_Load(object sender, EventArgs e)
         {
             loadgrid();
             loadcombo();
-            button1.Enabled = false;
             button2.Enabled = false;
             radioButton1.Enabled = false;
             radioButton2.Enabled = false;
             textBox1.Enabled = false;
-            button3.Enabled = true;
             textBox1.Text = "";
             textBox2.Text = "";
             comboBox1.SelectedIndex = 0;
@@ -37,37 +35,19 @@ namespace Kasir
             numericUpDown1.Value = 0;
             numericUpDown2.Value = 0;
             numericUpDown3.Value = 0;
+            textBox1.Enabled = false;
+            textBox2.Enabled = false;
+            comboBox1.Enabled = false;
+            comboBox2.Enabled = false;
+            numericUpDown1.Enabled = false;
+            numericUpDown2.Enabled = false;
         }
 
-        private void button10_Click(object sender, EventArgs e)
-        {
-            FormInputDiscount diskon = new FormInputDiscount(this);
-            diskon.Show();
-            this.Hide();
-        }
-
-        private void button11_Click(object sender, EventArgs e)
-        {
-            FormListDiscount diskon = new FormListDiscount(this);
-            diskon.Show();
-            this.Hide();
-        }
-
-        private void button6_Click(object sender, EventArgs e)
-        {
-            FormTambah tambah = new FormTambah(this, "merk");
-            tambah.ShowDialog();
-        }
-
-        private void button8_Click(object sender, EventArgs e)
-        {
-            FormTambah tambah = new FormTambah(this, "tipe");
-            tambah.ShowDialog();
-        }
+        
 
         private void button5_Click(object sender, EventArgs e)
         {
-            admin.Show();
+            kasir.Show();
             this.Close();
         }
         DataTable dtitem;
@@ -140,14 +120,12 @@ namespace Kasir
             {
                 radioButton2.Checked = true;
             }
-            button1.Enabled = true;
             button2.Enabled = true;
-            button3.Enabled = false;
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            FormInputBarang_Load(null, null);
+            FormInputBarangKasir_Load(null, null);
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -169,7 +147,7 @@ namespace Kasir
                 cmd.ExecuteNonQuery();
                 Program.conn.Close();
                 MessageBox.Show("Berhasil Add");
-                FormInputBarang_Load(null, null);
+                FormInputBarangKasir_Load(null, null);
             }
             else
             {
@@ -182,22 +160,17 @@ namespace Kasir
             //edit
             if (textBox2.Text != "" && numericUpDown1.Value != 0 && numericUpDown2.Value != 0 && numericUpDown3.Value != 0)
             {
-                string query = "UPDATE item SET it_nama = ?NAME,it_stock=?STOCK,it_price=?PRICE,it_size=?SIZE,me_id=?ME_ID,ti_id=?TI_ID where it_id=?IT_ID;";
+                string query = "UPDATE item SET it_stock=?STOCK where it_id=?IT_ID;";
 
                 MySqlCommand cmd = new MySqlCommand(query, Program.conn);
-                cmd.Parameters.Add(new MySqlParameter("NAME", textBox2.Text));
                 cmd.Parameters.Add(new MySqlParameter("STOCK", numericUpDown3.Value));
-                cmd.Parameters.Add(new MySqlParameter("PRICE", numericUpDown1.Value));
-                cmd.Parameters.Add(new MySqlParameter("SIZE", numericUpDown2.Value));
-                cmd.Parameters.Add(new MySqlParameter("ME_ID", comboBox1.SelectedValue));
-                cmd.Parameters.Add(new MySqlParameter("TI_ID", comboBox2.SelectedValue));
                 cmd.Parameters.Add(new MySqlParameter("IT_ID", textBox1.Text));
 
                 Program.conn.Open();
                 cmd.ExecuteNonQuery();
                 Program.conn.Close();
-                MessageBox.Show("Berhasil Edit");
-                FormInputBarang_Load(null, null);
+                MessageBox.Show("Berhasil Edit Stock");
+                FormInputBarangKasir_Load(null, null);
             }
             else
             {
@@ -218,7 +191,7 @@ namespace Kasir
             cmd.ExecuteNonQuery();
             Program.conn.Close();
             MessageBox.Show("Berhasil Hapus");
-            FormInputBarang_Load(null, null);
+            FormInputBarangKasir_Load(null, null);
         }
 
         private void numericUpDown3_ValueChanged(object sender, EventArgs e)
@@ -231,6 +204,11 @@ namespace Kasir
             {
                 radioButton2.Checked = true;
             }
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

@@ -11,22 +11,22 @@ using MySql.Data.MySqlClient;
 
 namespace Kasir
 {
-    public partial class FormInputUser : Form
+    public partial class FormInputUserKasir : Form
     {
-        FormAdmin admin;
-        public FormInputUser(FormAdmin admin)
+        FormKasir kasir;
+        public FormInputUserKasir(FormKasir kasir)
         {
             InitializeComponent();
-            this.admin = admin;
+            this.kasir = kasir;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            admin.Show();
+            kasir.Show();
             this.Close();
         }
 
-        private void FormInputUser_Load(object sender, EventArgs e)
+        private void FormInputUserKasir_Load(object sender, EventArgs e)
         {
             clear();
         }
@@ -59,7 +59,6 @@ namespace Kasir
             button3.Enabled = true;
             button4.Enabled = true;
             button5.Enabled = true;
-            button6.Enabled = true;
             textBox1.Enabled = true;
             textBox2.Enabled = true;
             textBox4.Enabled = true;
@@ -74,7 +73,6 @@ namespace Kasir
             button3.Enabled = false;
             button4.Enabled = false;
             button5.Enabled = false;
-            button6.Enabled = false;
             textBox1.Text = "";
             textBox2.Text = "";
             textBox4.Text = "";

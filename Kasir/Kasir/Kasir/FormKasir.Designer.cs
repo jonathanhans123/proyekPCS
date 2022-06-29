@@ -33,6 +33,7 @@ namespace Kasir
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -81,8 +82,10 @@ namespace Kasir
             this.label5 = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.button10 = new System.Windows.Forms.Button();
-            this.button9 = new System.Windows.Forms.Button();
             this.button11 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button5 = new System.Windows.Forms.Button();
+            this.button12 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
@@ -118,6 +121,7 @@ namespace Kasir
             this.dataGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1,
             this.Column2,
+            this.Column3,
             this.Column4});
             this.dataGridView2.Location = new System.Drawing.Point(14, 96);
             this.dataGridView2.Name = "dataGridView2";
@@ -141,6 +145,13 @@ namespace Kasir
             this.Column2.MinimumWidth = 6;
             this.Column2.Name = "Column2";
             this.Column2.ReadOnly = true;
+            // 
+            // Column3
+            // 
+            this.Column3.HeaderText = "Ukuran";
+            this.Column3.MinimumWidth = 6;
+            this.Column3.Name = "Column3";
+            this.Column3.ReadOnly = true;
             // 
             // Column4
             // 
@@ -619,8 +630,8 @@ namespace Kasir
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.button12);
             this.groupBox4.Controls.Add(this.button10);
-            this.groupBox4.Controls.Add(this.button9);
             this.groupBox4.Location = new System.Drawing.Point(12, 493);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(176, 206);
@@ -630,23 +641,13 @@ namespace Kasir
             // 
             // button10
             // 
-            this.button10.Location = new System.Drawing.Point(19, 108);
+            this.button10.Location = new System.Drawing.Point(16, 29);
             this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(151, 76);
+            this.button10.Size = new System.Drawing.Size(151, 81);
             this.button10.TabIndex = 1;
-            this.button10.Text = "Add Member";
+            this.button10.Text = "List Member";
             this.button10.UseVisualStyleBackColor = true;
             this.button10.Click += new System.EventHandler(this.button10_Click);
-            // 
-            // button9
-            // 
-            this.button9.Location = new System.Drawing.Point(20, 26);
-            this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(151, 76);
-            this.button9.TabIndex = 0;
-            this.button9.Text = "Add Item";
-            this.button9.UseVisualStyleBackColor = true;
-            this.button9.Click += new System.EventHandler(this.button9_Click);
             // 
             // button11
             // 
@@ -658,11 +659,42 @@ namespace Kasir
             this.button11.UseVisualStyleBackColor = true;
             this.button11.Click += new System.EventHandler(this.button11_Click);
             // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(958, 20);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(10, 10);
+            this.button3.TabIndex = 68;
+            this.button3.Text = "button3";
+            this.button3.UseVisualStyleBackColor = true;
+            // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(947, 12);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(156, 38);
+            this.button5.TabIndex = 69;
+            this.button5.Text = "LOGOUT";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
+            // button12
+            // 
+            this.button12.Location = new System.Drawing.Point(16, 116);
+            this.button12.Name = "button12";
+            this.button12.Size = new System.Drawing.Size(151, 78);
+            this.button12.TabIndex = 2;
+            this.button12.Text = "List Diskon";
+            this.button12.UseVisualStyleBackColor = true;
+            this.button12.Click += new System.EventHandler(this.button12_Click);
+            // 
             // FormKasir
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1130, 699);
+            this.Controls.Add(this.button5);
+            this.Controls.Add(this.button3);
             this.Controls.Add(this.button11);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
@@ -729,7 +761,6 @@ namespace Kasir
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Button button10;
-        private System.Windows.Forms.Button button9;
         private System.Windows.Forms.Label labelUkuran;
         private System.Windows.Forms.Label labelHarga;
         private System.Windows.Forms.Label labelTipe;
@@ -742,10 +773,14 @@ namespace Kasir
         private System.Windows.Forms.ComboBox comboBox4;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Label labelDiskon;
+        private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button button12;
     }
 }
 

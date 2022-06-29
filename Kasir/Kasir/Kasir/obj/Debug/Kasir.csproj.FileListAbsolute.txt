@@ -95,3 +95,8 @@ D:\Johans\Kuliah\Semester 4\PCS\proyekPCS\Kasir\Kasir\Kasir\bin\Debug\stdole.dll
 D:\Johans\Kuliah\Semester 4\PCS\proyekPCS\Kasir\Kasir\Kasir\bin\Debug\CrystalDecisions.ReportAppServer.CommonControls.dll
 D:\Johans\Kuliah\Semester 4\PCS\proyekPCS\Kasir\Kasir\Kasir\obj\Debug\Kasir.FormReport.resources
 D:\Johans\Kuliah\Semester 4\PCS\proyekPCS\Kasir\Kasir\Kasir\obj\Debug\Kasir.FormTransaksiDetail.resources
+D:\Johans\Kuliah\Semester 4\PCS\proyekPCS\Kasir\Kasir\Kasir\obj\Debug\Kasir.FormLogin.resources
+D:\Johans\Kuliah\Semester 4\PCS\proyekPCS\Kasir\Kasir\Kasir\obj\Debug\Kasir.FormInputBarangKasir.resources
+D:\Johans\Kuliah\Semester 4\PCS\proyekPCS\Kasir\Kasir\Kasir\obj\Debug\Kasir.FormInputUserKasir.resources
+D:\Johans\Kuliah\Semester 4\PCS\proyekPCS\Kasir\Kasir\Kasir\obj\Debug\Kasir.FormAdmin.resources
+D:\Johans\Kuliah\Semester 4\PCS\proyekPCS\Kasir\Kasir\Kasir\obj\Debug\Kasir.FormInputClient.resources
